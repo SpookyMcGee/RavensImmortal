@@ -1,61 +1,74 @@
-<!DOCTYPE html>
+<script type="text/javascript">
+        var gk_isXlsx = false;
+        var gk_xlsxFileLookup = {};
+        var gk_fileData = {};
+        function filledCell(cell) {
+          return cell !== '' && cell != null;
+        }
+        function loadFileData(filename) {
+        if (gk_isXlsx && gk_xlsxFileLookup[filename]) {
+            try {
+                var workbook = XLSX.read(gk_fileData[filename], { type: 'base64' });
+                var firstSheetName = workbook.SheetNames[0];
+                var worksheet = workbook.Sheets[firstSheetName];
+
+                // Convert sheet to JSON to filter blank rows
+                var jsonData = XLSX.utils.sheet_to_json(worksheet, { header: 1, blankrows: false, defval: '' });
+                // Filter out blank rows (rows where all cells are empty, null, or undefined)
+                var filteredData = jsonData.filter(row => row.some(filledCell));
+
+                // Heuristic to find the header row by ignoring rows with fewer filled cells than the next row
+                var headerRowIndex = filteredData.findIndex((row, index) =>
+                  row.filter(filledCell).length >= filteredData[index + 1]?.filter(filledCell).length
+                );
+                // Fallback
+                if (headerRowIndex === -1 || headerRowIndex > 25) {
+                  headerRowIndex = 0;
+                }
+
+                // Convert filtered JSON back to CSV
+                var csv = XLSX.utils.aoa_to_sheet(filteredData.slice(headerRowIndex)); // Create a new sheet from filtered array of arrays
+                csv = XLSX.utils.sheet_to_csv(csv, { header: 1 });
+                return csv;
+            } catch (e) {
+                console.error(e);
+                return "";
+            }
+        }
+        return gk_fileData[filename] || "";
+        }
+        </script><!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Echospace - Under Construction</title>
-  <style>
-    body {
-      background-color: #f4f3f1; /* classic MySpace eggshell */
-      font-family: Arial, sans-serif;
-      color: #000;
-      text-align: center;
-      padding-top: 100px;
-    }
-
-    img {
-      max-width: 90vw;
-      height: auto;
-    }
-
-    #sunmoon {
-      display: none;
-    }
-
-    .under-construction {
-      font-size: 1.5em;
-      margin-top: 20px;
-      color: #333;
-    }
-  </style>
+  <title>Ravens Immortal</title>
+  <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-
-  <img id="echospace" src="images/Echospace logo.png" alt="Echospace Logo">
-  <img id="sunmoon" src="images/Sun Moon logo.png" alt="Sun Moon Logo">
-  <div class="under-construction">This page is under construction. Come back soon. 🛠️</div>
-
-  <script>
-    const echo = document.getElementById('echospace');
-    const moon = document.getElementById('sunmoon');
-
-    function toggleLogos() {
-      setTimeout(() => {
-        echo.style.display = 'none';
-        moon.style.display = 'inline';
-
-        setTimeout(() => {
-          moon.style.display = 'none';
-          echo.style.display = 'inline';
-        }, 2000);
-
-      }, 2000);
-    }
-
-    toggleLogos();
-    setInterval(toggleLogos, 4000);
-  </script>
-
+  <div class="header">
+    <img src="images/Echospace logo.png" alt="Echo Space Logo" class="logo">
+    <div class="search-bar">
+      <input type="text" placeholder="Search Users:">
+      <button>Search</button>
+    </div>
+    <div class="nav">
+      <a href="#">Home</a> | <a href="#">Browse</a> | <a href="#">Search</a> | <a href="#">Invite</a> | <a href="#">Mail</a> | <a href="#">Forum</a> | <a href="#">Groups</a> | <a href="#">Events</a> | <a href="#">Videos</a> | <a href="#">About</a>
+    </div>
+  </div>
+  <div class="profile">
+    <img src="images/Sun Moon logo.png" alt="Ravens Immortal" class="profile-pic">
+    <h1>Ravens Immortal</h1>
+    <p><em>ONLINE!</em></p>
+    <p>Under construction</p>
+    <div class="profile-actions">
+      <button>Add to Friends</button>
+      <button>Add to Favorites</button>
+      <button>Send Message</button>
+      <button>Forward to Friend</button>
+      <button>Instant Message</button>
+      <button>Block User</button>
+    </div>
+  </div>
+  <script src="script.js"></script>
 </body>
 </html>
