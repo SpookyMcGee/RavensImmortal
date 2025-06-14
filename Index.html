@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Echospace - Under Construction</title>
+  <style>
+    body {
+      background-color: #f4f3f1; /* classic MySpace eggshell */
+      font-family: Arial, sans-serif;
+      color: #000;
+      text-align: center;
+      padding-top: 100px;
+    }
+
+    img {
+      max-width: 90vw;
+      height: auto;
+    }
+
+    #sunmoon {
+      display: none;
+    }
+
+    .under-construction {
+      font-size: 1.5em;
+      margin-top: 20px;
+      color: #333;
+    }
+  </style>
+</head>
+<body>
+
+  <img id="echospace" src="ChatGPT Image Jun 14, 2025, 09_28_03 AM.png" alt="Echospace Logo">
+  <img id="sunmoon" src="ChatGPT Image Jun 13, 2025, 12_24_33 AM.png" alt="Sun Moon Logo">
+  <div class="under-construction">This page is under construction. Come back soon. 🛠️</div>
+
+  <script>
+    const echo = document.getElementById('echospace');
+    const moon = document.getElementById('sunmoon');
+
+    function toggleLogos() {
+      setTimeout(() => {
+        echo.style.display = 'none';
+        moon.style.display = 'inline';
+
+        setTimeout(() => {
+          moon.style.display = 'none';
+          echo.style.display = 'inline';
+        }, 2000);
+
+      }, 2000);
+    }
+
+    toggleLogos();
+    setInterval(toggleLogos, 4000);
+  </script>
+
+</body>
+</html>
