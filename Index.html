@@ -1,74 +1,130 @@
-<script type="text/javascript">
-        var gk_isXlsx = false;
-        var gk_xlsxFileLookup = {};
-        var gk_fileData = {};
-        function filledCell(cell) {
-          return cell !== '' && cell != null;
-        }
-        function loadFileData(filename) {
-        if (gk_isXlsx && gk_xlsxFileLookup[filename]) {
-            try {
-                var workbook = XLSX.read(gk_fileData[filename], { type: 'base64' });
-                var firstSheetName = workbook.SheetNames[0];
-                var worksheet = workbook.Sheets[firstSheetName];
-
-                // Convert sheet to JSON to filter blank rows
-                var jsonData = XLSX.utils.sheet_to_json(worksheet, { header: 1, blankrows: false, defval: '' });
-                // Filter out blank rows (rows where all cells are empty, null, or undefined)
-                var filteredData = jsonData.filter(row => row.some(filledCell));
-
-                // Heuristic to find the header row by ignoring rows with fewer filled cells than the next row
-                var headerRowIndex = filteredData.findIndex((row, index) =>
-                  row.filter(filledCell).length >= filteredData[index + 1]?.filter(filledCell).length
-                );
-                // Fallback
-                if (headerRowIndex === -1 || headerRowIndex > 25) {
-                  headerRowIndex = 0;
-                }
-
-                // Convert filtered JSON back to CSV
-                var csv = XLSX.utils.aoa_to_sheet(filteredData.slice(headerRowIndex)); // Create a new sheet from filtered array of arrays
-                csv = XLSX.utils.sheet_to_csv(csv, { header: 1 });
-                return csv;
-            } catch (e) {
-                console.error(e);
-                return "";
-            }
-        }
-        return gk_fileData[filename] || "";
-        }
-        </script><!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Ravens Immortal</title>
-  <link rel="stylesheet" href="styles.css">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Vincent's Echospace</title>
+  <style>
+    body {
+      background-color: #f4f3f1;
+      font-family: Arial, sans-serif;
+      color: #000;
+      margin: 0;
+      padding: 0;
+    }
+
+    .header {
+      background-color: #003366;
+      color: white;
+      padding: 20px;
+      text-align: center;
+      font-size: 2em;
+    }
+
+    .container {
+      display: flex;
+      max-width: 1000px;
+      margin: 30px auto;
+      padding: 0 10px;
+    }
+
+    .sidebar {
+      width: 250px;
+      background-color: #fff;
+      border: 1px solid #ccc;
+      padding: 10px;
+    }
+
+    .main-content {
+      flex: 1;
+      margin-left: 20px;
+      background-color: #fff;
+      border: 1px solid #ccc;
+      padding: 10px;
+    }
+
+    .profile-pic {
+      width: 100%;
+      border: 2px solid #333;
+    }
+
+    .section {
+      margin-bottom: 20px;
+    }
+
+    .top8 {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 10px;
+    }
+
+    .top8 img {
+      width: 100%;
+      border: 1px solid #aaa;
+    }
+
+    .nav {
+      background-color: #ccc;
+      padding: 5px;
+      margin-bottom: 10px;
+    }
+
+    .nav a {
+      margin-right: 10px;
+      color: #000;
+      text-decoration: none;
+    }
+  </style>
 </head>
 <body>
   <div class="header">
-    <img src="images/Echospace logo.png" alt="Echo Space Logo" class="logo">
-    <div class="search-bar">
-      <input type="text" placeholder="Search Users:">
-      <button>Search</button>
+    <img src="images/echospace-logo.png" alt="Echospace Logo" style="height: 60px; vertical-align: middle;"> Vincent's Echospace
+  </div>
+
+  <div class="container">
+    <div class="sidebar">
+      <div class="section">
+        <img src="images/vincent-profile.png" alt="Vincent Profile" class="profile-pic">
+      </div>
+      <div class="section">
+        <strong>Status:</strong><br>
+        "Listening to the echoes between who I was and who I became."
+      </div>
+      <div class="section">
+        <strong>Contacting Vincent:</strong><br>
+        📧 Send Echo<br>
+        🔗 Add to Dreamspace<br>
+        💔 Block Reality
+      </div>
     </div>
-    <div class="nav">
-      <a href="#">Home</a> | <a href="#">Browse</a> | <a href="#">Search</a> | <a href="#">Invite</a> | <a href="#">Mail</a> | <a href="#">Forum</a> | <a href="#">Groups</a> | <a href="#">Events</a> | <a href="#">Videos</a> | <a href="#">About</a>
+
+    <div class="main-content">
+      <div class="nav">
+        <a href="#">Home</a>
+        <a href="#">Blog</a>
+        <a href="#">Lore</a>
+        <a href="#">Band</a>
+      </div>
+
+      <div class="section">
+        <h3>About Me</h3>
+        <p>I saw her in the sand, and everything before that moment felt like static. Now I write down what remains.</p>
+      </div>
+
+      <div class="section">
+        <h3>Top 8 Echoes</h3>
+        <div class="top8">
+          <img src="images/sara.png" alt="Sara">
+          <img src="images/damien.png" alt="Damien">
+          <img src="images/star.png" alt="Star">
+          <img src="images/spooky.png" alt="Spooky">
+          <img src="images/alyss.png" alt="Alyss">
+          <img src="images/grizzlefur.png" alt="Grizzlefur">
+          <img src="images/you.png" alt="You">
+          <img src="images/raven.png" alt="Raven (crossed out)">
+        </div>
+      </div>
     </div>
   </div>
-  <div class="profile">
-    <img src="images/Sun Moon logo.png" alt="Ravens Immortal" class="profile-pic">
-    <h1>Ravens Immortal</h1>
-    <p><em>ONLINE!</em></p>
-    <p>Under construction</p>
-    <div class="profile-actions">
-      <button>Add to Friends</button>
-      <button>Add to Favorites</button>
-      <button>Send Message</button>
-      <button>Forward to Friend</button>
-      <button>Instant Message</button>
-      <button>Block User</button>
-    </div>
-  </div>
-  <script src="script.js"></script>
 </body>
 </html>
