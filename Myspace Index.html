@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Vincent's Echospace</title>
+  <style>
+    body {
+      background-color: #f4f3f1;
+      font-family: Arial, sans-serif;
+      color: #000;
+      margin: 0;
+      padding: 0;
+    }
+
+    .header {
+      background-color: #003366;
+      color: white;
+      padding: 20px;
+      text-align: center;
+      font-size: 2em;
+    }
+
+    .container {
+      display: flex;
+      max-width: 1000px;
+      margin: 30px auto;
+      padding: 0 10px;
+    }
+
+    .sidebar {
+      width: 250px;
+      background-color: #fff;
+      border: 1px solid #ccc;
+      padding: 10px;
+    }
+
+    .main-content {
+      flex: 1;
+      margin-left: 20px;
+      background-color: #fff;
+      border: 1px solid #ccc;
+      padding: 10px;
+    }
+
+    .profile-pic {
+      width: 100%;
+      border: 2px solid #333;
+    }
+
+    .section {
+      margin-bottom: 20px;
+    }
+
+    .top8 {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 10px;
+    }
+
+    .top8 img {
+      width: 100%;
+      border: 1px solid #aaa;
+    }
+
+    .nav {
+      background-color: #ccc;
+      padding: 5px;
+      margin-bottom: 10px;
+    }
+
+    .nav a {
+      margin-right: 10px;
+      color: #000;
+      text-decoration: none;
+    }
+  </style>
+</head>
+<body>
+  <div class="header">
+    <img src="images/echospace logo white.png" alt="Echospace Logo" style="height: 60px; vertical-align: middle;"> Vincent's Echospace
+  </div>
+
+  <div class="container">
+    <div class="sidebar">
+      <div class="section">
+        <img src="images/vincent-profile.png" alt="Vincent Profile" class="profile-pic">
+      </div>
+      <div class="section">
+        <strong>Status:</strong><br>
+        "Listening to the echoes between who I was and who I became."
+      </div>
+      <div class="section">
+        <strong>Contacting Vincent:</strong><br>
+        📧 Send Echo<br>
+        🔗 Add to Dreamspace<br>
+        💔 Block Reality
+      </div>
+    </div>
+
+    <div class="main-content">
+      <div class="nav">
+        <a href="#">Home</a>
+        <a href="#">Blog</a>
+        <a href="#">Lore</a>
+        <a href="#">Band</a>
+      </div>
+
+      <div class="section">
+        <h3>About Me</h3>
+        <p>I saw her in the sand, and everything before that moment felt like static. Now I write down what remains.</p>
+      </div>
+
+      <div class="section">
+        <h3>Top 8 Echoes</h3>
+        <div class="top8">
+          <img src="images/sara.png" alt="Sara">
+          <img src="images/damien.png" alt="Damien">
+          <img src="images/star.png" alt="Star">
+          <img src="images/spooky.png" alt="Spooky">
+          <img src="images/alyss.png" alt="Alyss">
+          <img src="images/grizzlefur.png" alt="Grizzlefur">
+          <img src="images/you.png" alt="You">
+          <img src="images/raven.png" alt="Raven (crossed out)">
+        </div>
+      </div>
+    </div>
+  </div>
+</body>
+</html>

@@ -1,130 +1,66 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Vincent's Echospace</title>
-  <style>
-    body {
-      background-color: #f4f3f1;
-      font-family: Arial, sans-serif;
-      color: #000;
-      margin: 0;
-      padding: 0;
-    }
-
-    .header {
-      background-color: #003366;
-      color: white;
-      padding: 20px;
-      text-align: center;
-      font-size: 2em;
-    }
-
-    .container {
-      display: flex;
-      max-width: 1000px;
-      margin: 30px auto;
-      padding: 0 10px;
-    }
-
-    .sidebar {
-      width: 250px;
-      background-color: #fff;
-      border: 1px solid #ccc;
-      padding: 10px;
-    }
-
-    .main-content {
-      flex: 1;
-      margin-left: 20px;
-      background-color: #fff;
-      border: 1px solid #ccc;
-      padding: 10px;
-    }
-
-    .profile-pic {
-      width: 100%;
-      border: 2px solid #333;
-    }
-
-    .section {
-      margin-bottom: 20px;
-    }
-
-    .top8 {
-      display: grid;
-      grid-template-columns: repeat(4, 1fr);
-      gap: 10px;
-    }
-
-    .top8 img {
-      width: 100%;
-      border: 1px solid #aaa;
-    }
-
-    .nav {
-      background-color: #ccc;
-      padding: 5px;
-      margin-bottom: 10px;
-    }
-
-    .nav a {
-      margin-right: 10px;
-      color: #000;
-      text-decoration: none;
-    }
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ravens Immortal</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            align-items: center;
+            background: url('images/nightscene.png') no-repeat center center fixed;
+            background-size: cover;
+            overflow: hidden;
+            color: #fff;
+            font-family: Arial, sans-serif;
+        }
+        .overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: url('images/television-static.gif') repeat;
+            opacity: 0.3;
+            z-index: 1;
+        }
+        .content {
+            position: relative;
+            z-index: 2;
+            text-align: center;
+            padding: 20px;
+        }
+        .title {
+            font-family: 'Courier New', Courier, monospace;
+            font-size: 4em;
+            letter-spacing: 2px;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7);
+            margin: 0;
+        }
+        .subtitle {
+            font-family: 'DS-Digital', Arial, sans-serif;
+            font-size: 1.5em;
+            letter-spacing: 2px;
+            text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.7);
+            margin: 0;
+        }
+        /* Fallback if custom font fails */
+        @font-face {
+            font-family: 'DS-Digital';
+            src: url('https://fonts.cdnfonts.com/s/167755/DS-DIGI.TTF') format('truetype');
+        }
+    </style>
 </head>
 <body>
-  <div class="header">
-    <img src="images/echospace logo white.png" alt="Echospace Logo" style="height: 60px; vertical-align: middle;"> Vincent's Echospace
-  </div>
-
-  <div class="container">
-    <div class="sidebar">
-      <div class="section">
-        <img src="images/vincent-profile.png" alt="Vincent Profile" class="profile-pic">
-      </div>
-      <div class="section">
-        <strong>Status:</strong><br>
-        "Listening to the echoes between who I was and who I became."
-      </div>
-      <div class="section">
-        <strong>Contacting Vincent:</strong><br>
-        📧 Send Echo<br>
-        🔗 Add to Dreamspace<br>
-        💔 Block Reality
-      </div>
+    <div class="overlay"></div>
+    <div class="content">
+        <h1 class="title">Ravens Immortal</h1>
+        <p class="subtitle">Deerfield April 2004</p>
     </div>
-
-    <div class="main-content">
-      <div class="nav">
-        <a href="#">Home</a>
-        <a href="#">Blog</a>
-        <a href="#">Lore</a>
-        <a href="#">Band</a>
-      </div>
-
-      <div class="section">
-        <h3>About Me</h3>
-        <p>I saw her in the sand, and everything before that moment felt like static. Now I write down what remains.</p>
-      </div>
-
-      <div class="section">
-        <h3>Top 8 Echoes</h3>
-        <div class="top8">
-          <img src="images/sara.png" alt="Sara">
-          <img src="images/damien.png" alt="Damien">
-          <img src="images/star.png" alt="Star">
-          <img src="images/spooky.png" alt="Spooky">
-          <img src="images/alyss.png" alt="Alyss">
-          <img src="images/grizzlefur.png" alt="Grizzlefur">
-          <img src="images/you.png" alt="You">
-          <img src="images/raven.png" alt="Raven (crossed out)">
-        </div>
-      </div>
-    </div>
-  </div>
 </body>
 </html>
