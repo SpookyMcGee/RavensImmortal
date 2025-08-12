@@ -56,13 +56,50 @@
             src: url('https://fonts.cdnfonts.com/s/167755/DS-DIGI.TTF') format('truetype');
         }
         
+            /* Existing styles above... */
+
+    /* Glitch image styling */
+    .glitch-image {
+        position: fixed;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        max-width: 400px;
+        z-index: 9999;
+        opacity: 0;
+        pointer-events: none;
+        transition: opacity 3s ease-in-out;
+    }
     </style>
 </head>
+<!-- Place right before </body> -->
+<img src="images/wakeup3.png" alt="Glitch" class="glitch-image" id="glitchImage">
+
+<script>
+    const glitchImage = document.getElementById("glitchImage");
+
+    function showGlitch() {
+        glitchImage.style.opacity = "1";
+        setTimeout(() => {
+            glitchImage.style.opacity = "0";
+        }, 2000); // stays visible for 2 sec
+    }
+
+    function randomGlitch() {
+        const delay = Math.random() * 10000 + 5000; // random between 5–15 seconds
+        setTimeout(() => {
+            showGlitch();
+            randomGlitch();
+        }, delay);
+    }
+
+    randomGlitch();
+</script>
 <body>
     <div class="overlay"></div>
     <div class="content">
-        <h1 class="title">Ravens Immortal</h1>
-        <p class="subtitle">Deerfield April 2004</p>
+        <h1 class="title"></h1>
+        <p class="subtitle">Deerfield, CA. April 2004</p>
     </div>
 </body>
 </html>
