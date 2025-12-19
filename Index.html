@@ -1,27 +1,115 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Raven’s Immortal</title>
+  <title>Raven's Immortal</title>
 
   <style>
     /* Reset */
     * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    /* ---- Background swap (mobile vs desktop) ---- */
+    :root {
+      --bg: url("images/frontpageMOBILE.png");
+    }
+
+    /* Desktop+ */
+    @media (min-width: 900px) {
+      :root { --bg: url("images/frontpageDESKTOP.png"); }
+    }
+
+    /* ---- Page ---- */
     html, body { height: 100%; }
 
-    /* Fullscreen background image */
     body {
-      background-color: #000; /* fallback while loading */
-      background-image: url("images/frontpagecd.png");
+      font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+      background: #000;
+      color: #fff;
+      overflow-x: hidden;   /* keep horizontal scroll away */
+      overflow-y: auto;     /* scrollable page */
+    }
+
+    /* Full-viewport background layer */
+    .bg {
+      position: fixed;
+      inset: 0;
+      background-image: var(--bg);
       background-repeat: no-repeat;
       background-position: center center;
-      background-size: cover; /* fills screen, crops edges if needed */
+      background-size: cover; /* fills screen, crops if needed */
+      z-index: -2;
+    }
+
+    /* Optional: subtle readability layer (keep it gentle) */
+    .veil {
+      position: fixed;
+      inset: 0;
+      background: radial-gradient(
+        circle at center,
+        rgba(0,0,0,0.10) 0%,
+        rgba(0,0,0,0.35) 70%,
+        rgba(0,0,0,0.55) 100%
+      );
+      z-index: -1;
+      pointer-events: none;
+    }
+
+    /* Content area (scrolls over the fixed background) */
+    main {
+      min-height: 220vh; /* makes the page scrollable; adjust anytime */
+      padding: 24px;
+      display: flex;
+      align-items: flex-end;
+    }
+
+    /* A simple bottom “footer” zone you can customize */
+    .bottom {
+      width: 100%;
+      max-width: 980px;
+      margin: 0 auto;
+      padding: 16px 16px 22px;
+      border-radius: 14px;
+      background: rgba(0,0,0,0.45);
+      backdrop-filter: blur(6px);
+      -webkit-backdrop-filter: blur(6px);
+      border: 1px solid rgba(255,255,255,0.08);
+    }
+
+    .bottom h1 {
+      font-size: clamp(18px, 2.5vw, 28px);
+      font-weight: 700;
+      letter-spacing: 0.02em;
+      margin-bottom: 6px;
+    }
+
+    .bottom p {
+      opacity: 0.9;
+      line-height: 1.4;
+      font-size: clamp(13px, 1.6vw, 16px);
+    }
+
+    /* Respect reduced motion */
+    @media (prefers-reduced-motion: reduce) {
+      html:focus-within { scroll-behavior: auto; }
+      * { transition: none !important; animation: none !important; }
     }
   </style>
 </head>
 
 <body>
-  <!-- Intentionally empty: full-page image background -->
+  <!-- Background -->
+  <div class="bg" aria-hidden="true"></div>
+  <div class="veil" aria-hidden="true"></div>
+
+  <!-- Scrollable content --
+  <main>
+    You can delete this whole block if you truly want “image only”
+    <section class="bottom">
+      <h1>Raven’s Immortal</h1>
+      <p>Scroll.</p>
+    </section>
+  </main>
+  -->
 </body>
 </html>
