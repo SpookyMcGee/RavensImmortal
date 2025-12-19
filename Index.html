@@ -1,115 +1,230 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Raven's Immortal</title>
+  <title>Raven’s Immortal</title>
 
   <style>
     /* Reset */
     * { margin: 0; padding: 0; box-sizing: border-box; }
-
-    /* ---- Background swap (mobile vs desktop) ---- */
-    :root {
-      --bg: url("images/frontpageMOBILE.png");
-    }
-
-    /* Desktop+ */
-    @media (min-width: 900px) {
-      :root { --bg: url("images/frontpageDESKTOP.png"); }
-    }
-
-    /* ---- Page ---- */
     html, body { height: 100%; }
 
+    /* Background swap */
     body {
-      font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+      min-height: 100vh;
       background: #000;
-      color: #fff;
-      overflow-x: hidden;   /* keep horizontal scroll away */
-      overflow-y: auto;     /* scrollable page */
-    }
-
-    /* Full-viewport background layer */
-    .bg {
-      position: fixed;
-      inset: 0;
-      background-image: var(--bg);
+      background-image: url("/images/frontpageDESKTOP.png");
+      background-size: cover;
+      background-position: center;
       background-repeat: no-repeat;
-      background-position: center center;
-      background-size: cover; /* fills screen, crops if needed */
-      z-index: -2;
+      overflow-y: auto;
+      font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+    }
+    @media (max-width: 768px) {
+      body {
+        background-image: url("/images/frontpageMOBILE.png");
+      }
     }
 
-    /* Optional: subtle readability layer (keep it gentle) */
-    .veil {
+    /* Make page scrollable but keep player centered */
+    .page {
+      min-height: 140vh; /* change if you want more/less scroll */
+      position: relative;
+    }
+
+    /* Center player */
+    .player {
       position: fixed;
-      inset: 0;
-      background: radial-gradient(
-        circle at center,
-        rgba(0,0,0,0.10) 0%,
-        rgba(0,0,0,0.35) 70%,
-        rgba(0,0,0,0.55) 100%
-      );
-      z-index: -1;
-      pointer-events: none;
+      left: 50%;
+      top: 50%;
+      transform: translate(-50%, -50%);
+      width: min(92vw, 420px);
+      padding: 16px 16px 14px;
+      border-radius: 16px;
+      backdrop-filter: blur(10px);
+      background: rgba(0,0,0,0.55);
+      border: 1px solid rgba(255,255,255,0.15);
+      box-shadow: 0 10px 40px rgba(0,0,0,0.5);
+      color: #fff;
     }
 
-    /* Content area (scrolls over the fixed background) */
-    main {
-      min-height: 220vh; /* makes the page scrollable; adjust anytime */
-      padding: 24px;
+    .title {
+      font-size: 14px;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+      opacity: .85;
+      margin-bottom: 8px;
+    }
+
+    .track {
+      font-size: 16px;
+      font-weight: 600;
+      margin-bottom: 12px;
+      line-height: 1.2;
+    }
+
+    .controls {
       display: flex;
-      align-items: flex-end;
+      gap: 10px;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 10px;
     }
 
-    /* A simple bottom “footer” zone you can customize */
-    .bottom {
+    button {
+      cursor: pointer;
+      border: 1px solid rgba(255,255,255,0.18);
+      background: rgba(255,255,255,0.08);
+      color: #fff;
+      padding: 10px 12px;
+      border-radius: 12px;
+      font-weight: 600;
+      transition: transform .05s ease, background .2s ease;
+    }
+    button:hover { background: rgba(255,255,255,0.14); }
+    button:active { transform: scale(0.98); }
+
+    .row {
+      display: flex;
+      gap: 10px;
+      align-items: center;
+    }
+
+    input[type="range"] {
       width: 100%;
-      max-width: 980px;
-      margin: 0 auto;
-      padding: 16px 16px 22px;
-      border-radius: 14px;
-      background: rgba(0,0,0,0.45);
-      backdrop-filter: blur(6px);
-      -webkit-backdrop-filter: blur(6px);
-      border: 1px solid rgba(255,255,255,0.08);
+      accent-color: white;
     }
 
-    .bottom h1 {
-      font-size: clamp(18px, 2.5vw, 28px);
-      font-weight: 700;
-      letter-spacing: 0.02em;
-      margin-bottom: 6px;
+    .meta {
+      display: flex;
+      justify-content: space-between;
+      font-size: 12px;
+      opacity: .8;
+      margin-top: 6px;
     }
 
-    .bottom p {
-      opacity: 0.9;
-      line-height: 1.4;
-      font-size: clamp(13px, 1.6vw, 16px);
-    }
-
-    /* Respect reduced motion */
-    @media (prefers-reduced-motion: reduce) {
-      html:focus-within { scroll-behavior: auto; }
-      * { transition: none !important; animation: none !important; }
+    .hint {
+      margin-top: 10px;
+      font-size: 12px;
+      opacity: 0.7;
+      text-align: center;
     }
   </style>
 </head>
-
 <body>
-  <!-- Background -->
-  <div class="bg" aria-hidden="true"></div>
-  <div class="veil" aria-hidden="true"></div>
+  <div class="page"></div>
 
-  <!-- Scrollable content --
-  <main>
-    You can delete this whole block if you truly want “image only”
-    <section class="bottom">
-      <h1>Raven’s Immortal</h1>
-      <p>Scroll.</p>
-    </section>
-  </main>
-  -->
+  <div class="player" role="region" aria-label="Music player">
+    <div class="title">Raven’s Immortal — Playlist</div>
+    <div class="track" id="trackName">Loading…</div>
+
+    <div class="controls">
+      <button id="prevBtn" type="button">⟵ Prev</button>
+      <button id="playBtn" type="button">Play</button>
+      <button id="nextBtn" type="button">Next ⟶</button>
+    </div>
+
+    <div class="row">
+      <input id="seek" type="range" min="0" max="100" value="0" />
+    </div>
+
+    <div class="meta">
+      <span id="timeNow">0:00</span>
+      <span id="timeDur">0:00</span>
+    </div>
+
+    <div class="hint">Tip: first click is required to start audio in browsers.</div>
+
+    <audio id="audio" preload="metadata"></audio>
+  </div>
+
+  <script>
+    // ✅ Edit these to match your files/folder names
+    const playlist = [
+      { name: "A Childs Lullaby", src: "/Music/a_childs_lullaby.mp3" },
+      { name: "Are U There?", src: "/Music/are_u_there.mp3" },
+      { name: "Crescent Flower", src: "/Music/crescent_flower.mp3" },
+      { name: "Eternal Birds", src: "/Music/eternal_birds.mp3" },
+      { name: "God, Hear Me Now", src: "/Music/god_hear_me_now.mp3" },
+      { name: "Lost Meadows", src: "/Music/lost_meadows.mp3" },
+      { name: "Witches and Men", src: "/Music/witches_and_men.mp3" }
+    ];
+
+    const audio = document.getElementById("audio");
+    const trackName = document.getElementById("trackName");
+    const playBtn = document.getElementById("playBtn");
+    const prevBtn = document.getElementById("prevBtn");
+    const nextBtn = document.getElementById("nextBtn");
+    const seek = document.getElementById("seek");
+    const timeNow = document.getElementById("timeNow");
+    const timeDur = document.getElementById("timeDur");
+
+    let index = 0;
+    let seeking = false;
+
+    function fmt(t) {
+      if (!isFinite(t)) return "0:00";
+      const m = Math.floor(t / 60);
+      const s = Math.floor(t % 60).toString().padStart(2, "0");
+      return `${m}:${s}`;
+    }
+
+    function loadTrack(i, autoplay = false) {
+      index = (i + playlist.length) % playlist.length;
+      const t = playlist[index];
+      trackName.textContent = t.name;
+      audio.src = t.src;
+      audio.load();
+
+      if (autoplay) {
+        audio.play().then(() => {
+          playBtn.textContent = "Pause";
+        }).catch(() => {
+          // Autoplay may be blocked until user clicks
+          playBtn.textContent = "Play";
+        });
+      } else {
+        playBtn.textContent = "Play";
+      }
+    }
+
+    playBtn.addEventListener("click", () => {
+      if (audio.paused) {
+        audio.play().then(() => playBtn.textContent = "Pause");
+      } else {
+        audio.pause();
+        playBtn.textContent = "Play";
+      }
+    });
+
+    prevBtn.addEventListener("click", () => loadTrack(index - 1, true));
+    nextBtn.addEventListener("click", () => loadTrack(index + 1, true));
+
+    audio.addEventListener("loadedmetadata", () => {
+      timeDur.textContent = fmt(audio.duration);
+    });
+
+    audio.addEventListener("timeupdate", () => {
+      if (seeking) return;
+      timeNow.textContent = fmt(audio.currentTime);
+      const pct = (audio.currentTime / audio.duration) * 100;
+      seek.value = isFinite(pct) ? pct : 0;
+    });
+
+    audio.addEventListener("ended", () => {
+      loadTrack(index + 1, true);
+    });
+
+    seek.addEventListener("input", () => { seeking = true; });
+    seek.addEventListener("change", () => {
+      const pct = Number(seek.value) / 100;
+      if (isFinite(audio.duration)) audio.currentTime = pct * audio.duration;
+      seeking = false;
+    });
+
+    // initial
+    loadTrack(0, false);
+  </script>
 </body>
 </html>
